@@ -48,7 +48,7 @@ export default function Header() {
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <img src="/logo.jpeg" alt="Saraago Logo" className="h-8 md:h-9 object-contain bg-white px-2 py-1 rounded-lg" />
+          <img src="/logo.jpeg" alt="Saraago Logo" className="h-10 md:h-12 object-contain bg-white px-3 py-1.5 rounded-lg" />
         </Link>
 
         {/* Desktop Navigation */}
