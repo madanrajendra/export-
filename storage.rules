@@ -27,6 +27,11 @@ service firebase.storage {
       allow read: if true;
       allow write: if isSignedIn();
     }
+
+    match /gallery/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
     
     match /site-assets/{allPaths=**} {
       allow read: if true;
