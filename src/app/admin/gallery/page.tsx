@@ -1,15 +1,448 @@
 "use client";
-import React from "react";
-import { Image } from "lucide-react";
+
+import React, { useState, useEffect } from "react";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { db, storage } from "@/lib/firebase/config";
+import { 
+  Save, 
+  Loader2, 
+  X, 
+  Plus, 
+  Trash2,
+  ImageIcon, 
+  AlertCircle,
+  FileText,
+  Layers,
+  ToggleLeft,
+  ToggleRight,
+  ArrowUpDown,
+  Image as ImageLucide
+} from "lucide-react";
+
+interface GalleryItem {
+  id: string;
+  title: string;
+  imageUrl: string;
+  category: string;
+  description?: string;
+  isActive: boolean;
+  sortOrder: number;
+}
+
+const CATEGORIES = ["Logistics", "Sourcing", "Quality Control", "Global Events"];
 
 export default function AdminGalleryPage() {
+  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // Form State
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("Logistics");
+  const [sortOrder, setSortOrder] = useState<number>(0);
+  const [imageUrl, setImageUrl] = useState("");
+  const [isActive, setIsActive] = useState(true);
+
+  // Fetch Gallery Items
+  const fetchGalleryItems = async () => {
+    setLoading(true);
+    try {
+      const q = query(collection(db, "gallery"), orderBy("sortOrder", "asc"));
+      const snapshot = await getDocs(q);
+      const fetchedItems = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as GalleryItem[];
+      setItems(fetchedItems);
+    } catch (err: any) {
+      setError("Failed to fetch gallery items: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGalleryItems();
+  }, []);
+
+  // Handle Image Upload to Firebase Storage
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.length) return;
+    setUploading(true);
+    setError("");
+    const file = e.target.files[0];
+
+    try {
+      const storageRef = ref(storage, `gallery/${Date.now()}_${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      await new Promise<void>((resolve, reject) => {
+        uploadTask.on(
+          "state_changed",
+          null,
+          (err) => reject(err),
+          () => resolve()
+        );
+      });
+
+      const url = await getDownloadURL(storageRef);
+      setImageUrl(url);
+      setSuccess("Image uploaded successfully!");
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err: any) {
+      setError("Image upload failed. " + err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Submit Gallery Item
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!imageUrl) {
+      setError("Please upload an image first.");
+      return;
+    }
+    if (!title.trim()) {
+      setError("Please enter a title.");
+      return;
+    }
+
+    setSaving(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const newItemData = {
+        title: title.trim(),
+        description: description.trim() || "",
+        category,
+        imageUrl,
+        isActive,
+        sortOrder: Number(sortOrder) || 0,
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(collection(db, "gallery"), newItemData);
+      
+      // Clear Form
+      setTitle("");
+      setDescription("");
+      setCategory("Logistics");
+      setSortOrder(0);
+      setImageUrl("");
+      setIsActive(true);
+
+      setSuccess("Gallery item added successfully!");
+      setTimeout(() => setSuccess(""), 3000);
+      fetchGalleryItems();
+    } catch (err: any) {
+      setError("Failed to save gallery item: " + err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // Toggle Active Status
+  const toggleActiveStatus = async (item: GalleryItem) => {
+    try {
+      const itemRef = doc(db, "gallery", item.id);
+      await updateDoc(itemRef, {
+        isActive: !item.isActive,
+      });
+      // Update local state
+      setItems(
+        items.map((i) => (i.id === item.id ? { ...i, isActive: !i.isActive } : i))
+      );
+    } catch (err: any) {
+      setError("Failed to update status: " + err.message);
+    }
+  };
+
+  // Delete Gallery Item
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this gallery item?")) return;
+
+    try {
+      await deleteDoc(doc(db, "gallery", id));
+      setItems(items.filter((i) => i.id !== id));
+      setSuccess("Gallery item deleted successfully!");
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err: any) {
+      setError("Failed to delete gallery item: " + err.message);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center p-40 text-center">
-      <div className="bg-slate-50 p-10 rounded-full text-slate-200 border-4 border-dashed border-slate-100 mb-6">
-        <Image className="w-16 h-16" />
+    <div className="space-y-10 pb-20">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-4xl font-black text-primary uppercase tracking-tighter">
+          Gallery Catalog Manager
+        </h1>
+        <p className="text-slate-400 font-bold tracking-widest text-xs">
+          UPLOAD AND MANAGE OPERATIONAL PHOTOS SHOWN IN THE GLOBAL FOOTPRINT SHOWCASE
+        </p>
       </div>
-      <h1 className="text-3xl font-black text-primary uppercase">Gallery Module</h1>
-      <p className="text-slate-400 font-medium">Coming soon: Upload and manage operational photos.</p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        {/* Gallery Creation Form */}
+        <div className="lg:col-span-1 space-y-8">
+          <div className="bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-100 border border-slate-100 space-y-8">
+            <h3 className="text-2xl font-black text-primary flex items-center gap-3">
+              <Plus className="text-secondary w-6 h-6" />
+              Add Photo
+            </h3>
+
+            {error && (
+              <div className="p-4 bg-red-50 text-red-600 rounded-2xl flex items-center gap-3 border border-red-100">
+                <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                <span className="font-bold text-xs tracking-wider uppercase">{error}</span>
+              </div>
+            )}
+
+            {success && (
+              <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center gap-3 border border-emerald-100">
+                <FileText className="w-5 h-5 flex-shrink-0" />
+                <span className="font-bold text-xs tracking-wider uppercase">{success}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Image Upload Box */}
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                  Photo Asset
+                </label>
+                {imageUrl ? (
+                  <div className="group aspect-video rounded-3xl overflow-hidden relative shadow-md border-2 border-slate-50">
+                    <img src={imageUrl} alt="Uploaded Preview" className="w-full h-full object-cover" />
+                    <button 
+                      type="button" 
+                      onClick={() => setImageUrl("")}
+                      className="absolute top-2 right-2 bg-red-500 p-2 rounded-xl text-white opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="aspect-video flex flex-col items-center justify-center gap-3 border-4 border-dashed border-slate-100 rounded-3xl cursor-pointer bg-slate-50/50 hover:bg-slate-50 hover:border-secondary transition-all group">
+                    {uploading ? (
+                      <Loader2 className="w-8 h-8 text-secondary animate-spin" />
+                    ) : (
+                      <>
+                        <div className="bg-white p-3 rounded-2xl shadow-sm text-slate-300 group-hover:text-secondary group-hover:scale-110 transition-all">
+                          <ImageLucide className="w-6 h-6" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                          Upload Photo File
+                        </span>
+                      </>
+                    )}
+                    <input 
+                      type="file" 
+                      hidden 
+                      accept="image/*" 
+                      onChange={handleImageUpload} 
+                      disabled={uploading} 
+                    />
+                  </label>
+                )}
+              </div>
+
+              {/* Title & Description */}
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                  Photo Title
+                </label>
+                <input 
+                  type="text" 
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full px-6 py-4 bg-slate-50 border-2 border-transparent focus:border-secondary focus:bg-white rounded-2xl outline-none transition-all font-bold text-primary"
+                  placeholder="e.g. Shipment Loading in Mumbai Port"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                  Short Description
+                </label>
+                <textarea 
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={2}
+                  className="w-full px-6 py-4 bg-slate-50 border-2 border-transparent focus:border-secondary focus:bg-white rounded-2xl outline-none transition-all font-medium text-primary resize-none"
+                  placeholder="Describe the operations or process..."
+                />
+              </div>
+
+              {/* Category Select */}
+              <div className="space-y-2">
+                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                  Category
+                </label>
+                <select 
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full bg-slate-50 border-2 border-transparent focus:border-secondary rounded-2xl p-4 text-sm font-bold text-primary outline-none transition-all"
+                >
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Order & Status */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1 flex items-center gap-1">
+                    <ArrowUpDown className="w-3 h-3" />
+                    Sort Order
+                  </label>
+                  <input 
+                    type="number" 
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(Number(e.target.value))}
+                    className="w-full px-5 py-4 bg-slate-50 border-2 border-transparent focus:border-secondary focus:bg-white rounded-2xl outline-none transition-all font-bold text-primary"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+                    Active Status
+                  </label>
+                  <button 
+                    type="button"
+                    onClick={() => setIsActive(!isActive)}
+                    className={`w-full py-4 rounded-2xl flex items-center justify-center gap-2 border-2 font-bold transition-all ${
+                      isActive 
+                        ? "bg-emerald-50 border-emerald-200 text-emerald-600" 
+                        : "bg-slate-50 border-slate-200 text-slate-400"
+                    }`}
+                  >
+                    {isActive ? (
+                      <>
+                        <ToggleRight className="w-5 h-5 text-emerald-500" />
+                        <span>Visible</span>
+                      </>
+                    ) : (
+                      <>
+                        <ToggleLeft className="w-5 h-5 text-slate-400" />
+                        <span>Hidden</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button 
+                type="submit" 
+                disabled={saving || uploading}
+                className="w-full py-5 bg-secondary text-primary font-black rounded-2xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-secondary/15 flex items-center justify-center gap-3 border-b-4 border-amber-900 active:border-b-0"
+              >
+                {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-6 h-6" />}
+                ADD PHOTO TO GALLERY
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Gallery Items Grid */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-100 border border-slate-100 space-y-8">
+            <h3 className="text-2xl font-black text-primary flex items-center gap-3">
+              <Layers className="text-secondary w-6 h-6" />
+              Operational Showcase Items
+              <span className="text-xs text-slate-300 font-bold bg-slate-50 px-3 py-1 rounded-full">
+                {items.length} total
+              </span>
+            </h3>
+
+            {loading ? (
+              <div className="flex flex-col items-center py-20 gap-3">
+                <Loader2 className="w-8 h-8 text-secondary animate-spin" />
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  Loading Gallery...
+                </span>
+              </div>
+            ) : items.length === 0 ? (
+              <div className="text-center py-20 text-slate-300 font-medium">
+                No gallery photos added. Upload your first operation photo using the form on the left.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {items.map((item) => (
+                  <div 
+                    key={item.id} 
+                    className="border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col"
+                  >
+                    <div className="aspect-video relative overflow-hidden bg-slate-900">
+                      <img 
+                        src={item.imageUrl} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-6 flex flex-col justify-end">
+                        <div className="absolute top-4 left-4 flex gap-2">
+                          <span className="bg-black/60 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            Order: {item.sortOrder}
+                          </span>
+                          <span className="bg-secondary text-primary font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider">
+                            {item.category}
+                          </span>
+                        </div>
+                        <h4 className="text-white font-extrabold text-lg line-clamp-1">
+                          {item.title}
+                        </h4>
+                        {item.description && (
+                          <p className="text-slate-300 text-xs line-clamp-1 mt-1 font-medium">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="p-5 flex items-center justify-between bg-slate-50/50 flex-grow border-t border-slate-50">
+                      <button
+                        onClick={() => toggleActiveStatus(item)}
+                        className={`flex items-center gap-1.5 text-xs font-bold ${
+                          item.isActive ? "text-emerald-600" : "text-slate-400"
+                        }`}
+                      >
+                        {item.isActive ? (
+                          <>
+                            <ToggleRight className="w-5 h-5 text-emerald-500" />
+                            <span>Active</span>
+                          </>
+                        ) : (
+                          <>
+                            <ToggleLeft className="w-5 h-5 text-slate-400" />
+                            <span>Inactive</span>
+                          </>
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                        title="Delete Photo"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
