@@ -14,13 +14,14 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBLGDwJ0_3ZntPVkpEC-YRtF8TsLymZYxI",
-  authDomain: "memora-b9d52.firebaseapp.com",
-  projectId: "memora-b9d52",
-  storageBucket: "memora-b9d52.firebasestorage.app",
-  messagingSenderId: "1062122019851",
-  appId: "1:1062122019851:web:3135963295f48d4816bb0e",
-  measurementId: "G-XPDC7BM7N2"
+  apiKey: "AIzaSyDC7XysZimejx66GExLrFArgJeLZiC7c54",
+  authDomain: "jellies-monitoring.firebaseapp.com",
+  databaseURL: "https://jellies-monitoring-default-rtdb.firebaseio.com",
+  projectId: "jellies-monitoring",
+  storageBucket: "jellies-monitoring.firebasestorage.app",
+  messagingSenderId: "9203948874",
+  appId: "1:9203948874:web:f3754b215e3215d9fcb5b3",
+  measurementId: "G-58EX9MG8EF"
 };
 
 // Initialize Firebase
