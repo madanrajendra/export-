@@ -38,13 +38,8 @@ export default function Footer() {
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         {/* Company Info */}
         <div className="flex flex-col gap-6">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-white p-2 rounded-lg group-hover:bg-secondary transition-colors duration-300">
-              <Globe className="text-primary w-6 h-6" />
-            </div>
-            <span className="font-bold text-2xl tracking-tighter">
-              GE<span className="text-secondary">SOLUTIONS</span>
-            </span>
+          <Link href="/" className="flex items-center group">
+            <img src="/logo.jpeg" alt="Saraago Logo" className="h-10 md:h-12 object-contain bg-white px-3 py-1.5 rounded-xl" />
           </Link>
           <p className="text-slate-400 leading-relaxed max-w-xs text-sm">
             Empowering global businesses through reliable, efficient, and sustainable export solutions. Your trusted partner in international trade.
@@ -124,13 +119,19 @@ export default function Footer() {
               <div className="bg-slate-800 p-2 rounded-lg text-secondary">
                 <Phone className="w-4 h-4" />
               </div>
-              <p className="text-slate-400">+971 50 123 4567</p>
+              <p className="text-slate-400">+91 9610114181</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="bg-slate-800 p-2 rounded-lg text-secondary">
                 <Mail className="w-4 h-4" />
               </div>
-              <p className="text-slate-400">info@gesolutions.com</p>
+              <p className="text-slate-400">Saraagoexim@gmail.com</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="bg-slate-800 p-2 rounded-lg text-secondary flex items-center justify-center">
+                <span className="text-[9px] font-extrabold leading-none tracking-tighter">GST</span>
+              </div>
+              <p className="text-slate-400 font-medium text-xs">GSTIN: 08INLPK3173G1ZN</p>
             </div>
           </div>
         </div>
@@ -138,7 +139,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="container mx-auto px-4 border-t border-slate-800 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-medium">
-        <p>&copy; {currentYear} Global Export Solutions. All rights reserved.</p>
+        <p>&copy; {currentYear} Saraago. All rights reserved.</p>
         <div className="flex gap-6 uppercase tracking-wider">
           <Link href="/privacy" className="hover:text-secondary">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-secondary">Terms of Service</Link>

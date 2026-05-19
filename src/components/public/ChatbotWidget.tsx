@@ -31,7 +31,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState<Message[]>([
     { 
       id: "1", 
-      text: "Welcome to Global Export Solutions. I am your specialized trade assistant. How can I facilitate your international enquiry today?", 
+      text: "Welcome to Saraago. I am your specialized trade assistant. How can I facilitate your international enquiry today?", 
       sender: "bot", 
       timestamp: new Date() 
     }
@@ -97,7 +97,7 @@ export default function ChatbotWidget() {
                 <Globe className="text-secondary w-5 h-5 animate-spin-slow" />
               </div>
               <div>
-                <h3 className="text-white font-black tracking-widest text-xs uppercase">GE Assistant</h3>
+                <h3 className="text-white font-black tracking-widest text-xs uppercase">Saraago Assistant</h3>
                 <p className="text-secondary/80 text-[10px] font-black uppercase tracking-tighter">AI Trade Intelligence Active</p>
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function ChatbotWidget() {
                     </div>
                   )}
                   <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">
-                    {msg.sender === "bot" ? "GE AI" : "Manager"} • {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {msg.sender === "bot" ? "Saraago AI" : "Manager"} • {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
                 <div 

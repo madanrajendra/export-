@@ -58,12 +58,12 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-[2.5rem] p-10 shadow-2xl border border-slate-100 relative overflow-hidden">
         {/* Branding */}
         <div className="flex flex-col items-center gap-4 mb-10">
-          <div className="bg-primary p-4 rounded-3xl shadow-xl">
-            <Globe className="text-secondary w-8 h-8 animate-pulse" />
+          <div className="p-2 bg-white rounded-2xl shadow-md border border-slate-100">
+            <img src="/logo.jpeg" alt="Saraago Logo" className="h-10 object-contain" />
           </div>
           <div className="text-center">
             <h1 className="text-2xl font-black text-primary">ACCESS PORTAL</h1>
-            <p className="text-slate-400 text-sm font-medium">Global Export Solutions Management</p>
+            <p className="text-slate-400 text-sm font-medium">Saraago Management</p>
           </div>
         </div>
 

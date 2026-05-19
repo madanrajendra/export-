@@ -8,6 +8,7 @@ import {
   Globe2, 
   MessageCircle,
   X as XIcon,
+  FileText,
 } from "lucide-react";
 
 // Inline SVG icons for social platforms removed from lucide-react
@@ -81,7 +82,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-primary mb-1 uppercase tracking-widest text-xs">Direct Support</h4>
-                    <p className="text-slate-500 font-medium">+971 50 123 4567</p>
+                    <p className="text-slate-500 font-medium">+91 9610114181</p>
                     <p className="text-slate-400 text-[10px] font-bold">24/7 Response Line Active</p>
                   </div>
                 </div>
@@ -92,8 +93,17 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-primary mb-1 uppercase tracking-widest text-xs">Export Logistics</h4>
-                    <p className="text-slate-500 font-medium">logistics@gesolutions.com</p>
-                    <p className="text-slate-500 font-medium">info@gesolutions.com</p>
+                    <p className="text-slate-500 font-medium">Saraagoexim@gmail.com</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-5">
+                  <div className="bg-slate-50 p-4 rounded-2xl text-secondary">
+                    <FileText className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-primary mb-1 uppercase tracking-widest text-xs">Tax Registration</h4>
+                    <p className="text-slate-500 font-bold text-sm">GSTIN: 08INLPK3173G1ZN</p>
                   </div>
                 </div>
 

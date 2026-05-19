@@ -47,16 +47,8 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-primary p-2 rounded-lg group-hover:rotate-12 transition-transform duration-300">
-            <Globe className="text-white w-6 h-6" />
-          </div>
-          <span className={cn(
-            "font-bold text-xl tracking-tight transition-colors duration-300",
-            scrolled ? "text-primary" : "text-primary"
-          )}>
-            GE<span className="text-secondary">SOLUTIONS</span>
-          </span>
+        <Link href="/" className="flex items-center group">
+          <img src="/logo.jpeg" alt="Saraago Logo" className="h-8 md:h-9 object-contain bg-white px-2 py-1 rounded-lg" />
         </Link>
 
         {/* Desktop Navigation */}

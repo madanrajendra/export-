@@ -24,7 +24,7 @@ export const onEnquiryCreated = functions.firestore
     const id = context.params.enquiryId;
 
     const adminEmail = {
-      from: "GE Solutions Bot",
+      from: "Saraago Bot",
       to: process.env.ADMIN_EMAIL,
       subject: `[New Lead] Export Enquiry Ref# ${id}`,
       html: `
@@ -42,13 +42,13 @@ export const onEnquiryCreated = functions.firestore
     };
 
     const userEmail = {
-      from: "Global Export Solutions",
+      from: "Saraago",
       to: data.email,
       subject: "Acknowledgment: Your Export Enquiry is being processed",
       html: `
         <div style="font-family: sans-serif; padding: 20px; border-top: 4px solid #b45309;">
           <h2 style="color: #0f172a;">Hello ${data.name},</h2>
-          <p>Thank you for reaching out to Global Export Solutions. Our team has received your inquiry regarding <strong>${data.relatedItemType || "international trade"}</strong>.</p>
+          <p>Thank you for reaching out to Saraago. Our team has received your inquiry regarding <strong>${data.relatedItemType || "international trade"}</strong>.</p>
           <p>An export specialist will analyze your requirements and contact you within 24 business hours.</p>
           <br/>
           <p>Best regards,<br/>Trade Operations Team</p>

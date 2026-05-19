@@ -91,7 +91,7 @@ export default function HomePage() {
           </div>
           
           <div>
-            <h2 className="text-primary text-4xl font-bold mb-8">Why Thousands Trust GE Solutions</h2>
+            <h2 className="text-primary text-4xl font-bold mb-8">Why Thousands Trust Saraago</h2>
             <div className="flex flex-col gap-6">
               {[
                 { title: "Quality Assurance", desc: "Every product undergoing multi-stage checks before dispatch." },
