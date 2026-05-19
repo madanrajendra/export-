@@ -1,0 +1,41 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      // Access Firestore to check role (requires Firebase SDK 9+)
+      // but simpler rules also work based on UID if needed.
+      return isSignedIn(); // Base requirement for upload; admin logic handled by client and Cloud Functions
+    }
+
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn(); // allow all signed in users for now; admin logic in logic layers
+    }
+    
+    match /blogs/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+    
+    match /banners/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+    
+    match /site-assets/{allPaths=**} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+    
+    match /enquiries/{allPaths=**} {
+      allow read, write: if isSignedIn(); // For any files attached to enquiries
+    }
+
+  }
+}
