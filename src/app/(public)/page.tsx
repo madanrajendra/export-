@@ -10,54 +10,13 @@ import {
   CheckCircle2,
   Users2
 } from "lucide-react";
+import HeroSlider from "@/components/public/HeroSlider";
 
 export default function HomePage() {
   return (
     <div className="flex flex-col gap-24 pb-24">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-slate-950">
-        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay" />
-        
-        {/* Animated Orbs */}
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/40 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary/30 rounded-full blur-[100px] animate-pulse delay-700" />
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-sm font-bold mb-6 animate-fade-in">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
-              </span>
-              GLOBAL LOGISTICS PARTNER
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight leading-[1.1]">
-              Connecting <span className="text-secondary italic">Markets</span>, Delivering <span className="underline decoration-secondary/50 underline-offset-8">Trust</span>.
-            </h1>
-            
-            <p className="text-slate-400 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl">
-              From factory floor to global destinations. We simplify international trade with end-to-end export solutions managed by experts.
-            </p>
-            
-            <div className="flex flex-wrap gap-5">
-              <Link 
-                href="/products" 
-                className="bg-secondary text-white px-8 py-4 rounded-xl font-bold hover:scale-105 hover:shadow-[0_0_20px_rgba(180,83,9,0.4)] transition-all flex items-center gap-2 group"
-              >
-                Browse Products
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link 
-                href="/contact" 
-                className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-xl font-bold hover:bg-white/20 transition-all"
-              >
-                Get a Quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Slider Section */}
+      <HeroSlider />
 
       {/* Trust Stats */}
       <section className="container mx-auto px-4 -mt-32 relative z-20">
