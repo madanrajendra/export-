@@ -111,8 +111,9 @@ export default function Footer() {
                 <MapPin className="w-4 h-4" />
               </div>
               <p className="text-slate-400 leading-tight pt-1">
-                123 Trade Center, Maritime Plaza,<br />
-                Business Bay, Dubai, UAE
+                Railway Kua No- 03, Sutharon Ka Vas,<br />
+                Genhu Road, Near Barmer RS Sub Post Office,<br />
+                Barmer, Rajasthan - 344001
               </p>
             </div>
             <div className="flex items-center gap-3">

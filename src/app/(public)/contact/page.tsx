@@ -70,8 +70,9 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-bold text-primary mb-1 uppercase tracking-widest text-xs">Principal Location</h4>
                     <p className="text-slate-500 font-medium leading-relaxed">
-                      123 Maritime Plaza, Suite 405,<br />
-                      Dubai Business Bay, United Arab Emirates
+                      Railway Kua No- 03, Sutharon Ka Vas,<br />
+                      Genhu Road, Near Barmer RS Sub Post Office,<br />
+                      Barmer, Rajasthan - 344001
                     </p>
                   </div>
                 </div>
