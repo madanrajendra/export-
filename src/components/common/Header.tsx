@@ -2,11 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X, Globe, User, LogOut, LayoutDashboard } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/lib/firebase/config";
-import { signOut } from "firebase/auth";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -15,18 +12,17 @@ function cn(...inputs: ClassValue[]) {
 }
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
+  { name: "Home", href: "/#home" },
+  { name: "About", href: "/#about" },
   { name: "Products", href: "/products" },
-  { name: "Services", href: "/services" },
-  { name: "Gallery", href: "/gallery" },
-  { name: "Blog", href: "/blog" },
+  { name: "Quality", href: "/#quality" },
+  { name: "Export Process", href: "/#export-process" },
   { name: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
-  const { user, isAdmin } = useAuth();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -36,73 +32,69 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogout = () => signOut(auth);
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#") && pathname === "/") {
+      e.preventDefault();
+      const targetId = href.replace("/#", "");
+      if (targetId === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const elem = document.getElementById(targetId);
+        if (elem) {
+          elem.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+      setIsOpen(false);
+    } else {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "bg-white/80 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
+        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-white/80 backdrop-blur-sm py-4"
       )}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <img src="/logo.jpeg" alt="Saraago Logo" className="h-14 md:h-20 object-contain bg-white px-4 py-2 rounded-xl" />
+          <img src="/logo.jpeg" alt="SARAAGO Exim" className="h-12 md:h-16 object-contain" />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
               className={cn(
-                "text-sm font-medium transition-all hover:text-secondary relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary after:transition-all hover:after:w-full",
-                pathname === link.href ? "text-secondary after:w-full" : "text-primary"
+                "text-sm font-medium transition-all hover:text-secondary relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-secondary after:transition-all hover:after:w-full text-primary"
               )}
             >
               {link.name}
-            </Link>
+            </a>
           ))}
         </nav>
 
-        {/* Desktop Auth Section */}
+        {/* Desktop Action Button */}
         <div className="hidden lg:flex items-center gap-4">
-          {user ? (
-            <div className="flex items-center gap-3">
-              {isAdmin && (
-                <Link
-                  href="/admin/dashboard"
-                  className="flex items-center gap-1 text-sm font-semibold bg-primary text-white px-4 py-2 rounded-full hover:bg-primary/90 transition-all"
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  Admin
-                </Link>
-              )}
-              <button
-                onClick={handleLogout}
-                className="p-2 hover:bg-slate-100 rounded-full transition-all group"
-                title="Logout"
-              >
-                <LogOut className="w-5 h-5 text-muted group-hover:text-red-500" />
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="flex items-center gap-2 text-sm font-semibold border-2 border-primary text-primary px-5 py-2 rounded-full hover:bg-primary hover:text-white transition-all shadow-sm"
-            >
-              <User className="w-4 h-4" />
-              Log In
-            </Link>
-          )}
+          <a
+            href="/#contact"
+            onClick={(e) => handleLinkClick(e, "/#contact")}
+            className="flex items-center gap-2 text-sm font-semibold bg-primary text-white px-6 py-2.5 rounded-sm hover:bg-secondary transition-all shadow-md"
+          >
+            Send Enquiry
+          </a>
         </div>
 
         {/* Mobile Toggle */}
         <button
           className="lg:hidden p-2 text-primary"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle Menu"
         >
           {isOpen ? <X /> : <Menu />}
         </button>
@@ -112,56 +104,30 @@ export default function Header() {
       <div
         className={cn(
           "lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl transition-all duration-300 overflow-hidden",
-          isOpen ? "max-height-screen py-6" : "max-h-0 py-0"
+          isOpen ? "max-h-screen py-6 border-t border-slate-100" : "max-h-0 py-0"
         )}
       >
         <div className="container mx-auto px-4 flex flex-col gap-4">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
-              onClick={() => setIsOpen(false)}
-              className={cn(
-                "text-lg font-semibold py-2 border-b border-slate-100",
-                pathname === link.href ? "text-secondary" : "text-primary"
-              )}
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className="text-lg font-semibold py-3 border-b border-slate-100 text-primary hover:text-secondary"
             >
               {link.name}
-            </Link>
+            </a>
           ))}
-          {!user && (
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="mt-2 bg-primary text-white text-center py-3 rounded-xl font-bold"
-            >
-              Access Portal
-            </Link>
-          )}
-          {user && (
-            <div className="flex flex-col gap-2">
-              {isAdmin && (
-                <Link
-                  href="/admin/dashboard"
-                  onClick={() => setIsOpen(false)}
-                  className="bg-primary text-white text-center py-3 rounded-xl font-bold"
-                >
-                  Dashboard
-                </Link>
-              )}
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsOpen(false);
-                }}
-                className="text-red-500 font-bold py-2"
-              >
-                Sign Out
-              </button>
-            </div>
-          )}
+          <a
+            href="/#contact"
+            onClick={(e) => handleLinkClick(e, "/#contact")}
+            className="mt-4 bg-primary text-white text-center py-3 rounded-sm font-bold shadow-md"
+          >
+            Request Quotation
+          </a>
         </div>
       </div>
     </header>
   );
 }
+

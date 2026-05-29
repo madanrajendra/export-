@@ -123,9 +123,9 @@ export default function ProductForm({
         </button>
         <div>
           <h1 className="text-4xl font-black text-primary uppercase tracking-tighter">
-            {id ? "Edit Inventory Item" : "Create New Export Product"}
+            {id ? "Edit Jewellery Product" : "Add New Jewellery Product"}
           </h1>
-          <p className="text-slate-400 font-bold tracking-widest text-xs">GLOBAL CATALOG MANAGEMENT SUITE</p>
+          <p className="text-slate-400 font-bold tracking-widest text-xs">PREMIUM JEWELLERY EXPORT SUITE</p>
         </div>
       </div>
 
@@ -148,7 +148,7 @@ export default function ProductForm({
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Entity Name</label>
+                  <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Product Title</label>
                   <input 
                     {...register("title")}
                     className="w-full px-6 py-5 bg-slate-50 border-2 border-transparent focus:border-secondary focus:bg-white rounded-3xl outline-none transition-all font-bold text-primary"
@@ -171,7 +171,7 @@ export default function ProductForm({
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Market Snapshot (Short Description)</label>
+                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Short Description (For display cards)</label>
                 <textarea 
                   {...register("shortDescription")}
                   rows={2}
@@ -182,7 +182,7 @@ export default function ProductForm({
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Comprehensive Details (Rich Documentation)</label>
+                <label className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Full Product Specifications</label>
                 <textarea 
                   {...register("fullDescription")}
                   rows={8}
@@ -199,7 +199,7 @@ export default function ProductForm({
             <h3 className="text-2xl font-black text-primary flex items-center gap-3">
               <ImageIcon className="text-secondary w-6 h-6" />
               Visual Assets
-              <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Multi-image Support</span>
+              <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Supports 10+ Images</span>
             </h3>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -240,7 +240,7 @@ export default function ProductForm({
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-secondary/10 rounded-full blur-[80px]" />
             <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
               <Layers className="w-5 h-5" />
-              Finalize Entry
+              Publish Product
             </h3>
 
             <div className="space-y-6">
@@ -256,15 +256,16 @@ export default function ProductForm({
               </div>
 
               <div className="space-y-2 px-2">
-                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Catalog Category</label>
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Product Category</label>
                 <select 
                   {...register("category")}
                   className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm font-bold outline-none focus:border-secondary transition-all"
                 >
-                  <option className="bg-primary" value="Industrial">Industrial</option>
-                  <option className="bg-primary" value="Agriculture">Agriculture</option>
-                  <option className="bg-primary" value="Chemicals">Chemicals</option>
-                  <option className="bg-primary" value="Electronics">Electronics</option>
+                  <option className="bg-primary" value="Rings">Rings</option>
+                  <option className="bg-primary" value="Earrings">Earrings</option>
+                  <option className="bg-primary" value="Pendants">Pendants</option>
+                  <option className="bg-primary" value="Bracelets">Bracelets</option>
+                  <option className="bg-primary" value="Custom Jewellery">Custom Jewellery</option>
                 </select>
               </div>
 
@@ -274,7 +275,7 @@ export default function ProductForm({
                 className="w-full py-5 bg-secondary text-primary font-black rounded-[2rem] hover:scale-[1.03] active:scale-95 transition-all shadow-xl shadow-secondary/20 flex items-center justify-center gap-3 border-b-4 border-amber-900 active:border-b-0"
               >
                 {isSubmitting ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-6 h-6" />}
-                {id ? "COMMIT UPDATES" : "LODGE INTO CATALOG"}
+                {id ? "UPDATE PRODUCT" : "SAVE PRODUCT"}
               </button>
             </div>
           </div>
@@ -282,7 +283,7 @@ export default function ProductForm({
           <div className="bg-white border border-slate-100 p-8 rounded-[3rem] text-center">
             <FileText className="w-10 h-10 text-slate-100 mx-auto mb-4" />
             <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-loose">
-              By saving this entity, you certify quality compliance for international trade.
+              By saving this product, you confirm the details and export specifications are accurate.
             </p>
           </div>
         </div>

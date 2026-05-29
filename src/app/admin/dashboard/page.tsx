@@ -106,7 +106,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Enquiries (Simplified Preview) */}
-        <div className="lg:col-span-2 bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm overflow-hidden relative">
+        <div className="lg:col-span-3 bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm overflow-hidden relative">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-black text-primary flex items-center gap-2">
               Recent Enquiries
@@ -147,44 +147,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Quick Actions / System info */}
-        <div className="space-y-6">
-          <div className="bg-primary p-10 rounded-[3rem] text-white overflow-hidden relative group">
-            <div className="absolute -top-10 -right-10 overflow-hidden w-40 h-40 bg-secondary/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-              Infrastructure Status
-              <div className="h-2 w-2 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            </h3>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-sm font-medium">
-                <span className="text-slate-400">Database (Firestore)</span>
-                <span className="bg-white/10 px-3 py-1 rounded-full text-xs">Healthy</span>
-              </div>
-              <div className="flex justify-between items-center text-sm font-medium">
-                <span className="text-slate-400">Auth & Identities</span>
-                <span className="bg-white/10 px-3 py-1 rounded-full text-xs">Active</span>
-              </div>
-              <div className="flex justify-between items-center text-sm font-medium">
-                <span className="text-slate-400">Functions (AI Edge)</span>
-                <span className="bg-white/10 px-3 py-1 rounded-full text-xs">Ready</span>
-              </div>
-            </div>
-            <button className="w-full mt-10 py-4 bg-secondary text-primary font-black rounded-2xl hover:scale-[1.02] transition-all border-b-4 border-amber-900 active:border-b-0 active:translate-y-1">
-              System Health Check
-            </button>
-          </div>
-
-          <div className="bg-white border border-slate-100 p-8 rounded-[3rem] shadow-sm">
-            <h3 className="font-bold text-slate-400 text-xs tracking-widest uppercase mb-4">Export Cloud Storage</h3>
-            <div className="h-2 bg-slate-100 rounded-full mb-2 overflow-hidden">
-              <div className="h-full bg-primary w-[45%]" />
-            </div>
-            <div className="flex justify-between text-[10px] font-black text-slate-300 tracking-widest uppercase">
-              <span>Used: 2.1 GB</span>
-              <span>Limit: 5 GB</span>
-            </div>
-          </div>
-        </div>
+        {/* Infrastructure Status removed per user request */}
       </div>
     </div>
   );

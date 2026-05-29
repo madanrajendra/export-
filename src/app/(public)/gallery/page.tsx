@@ -29,7 +29,7 @@ export default function GalleryPage() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "Logistics", "Sourcing", "Quality Control", "Global Events"];
+  const categories = ["All", "Rings", "Earrings", "Pendants", "Bracelets", "Custom Jewellery"];
 
   useEffect(() => {
     const q = query(
@@ -63,7 +63,7 @@ export default function GalleryPage() {
             Our <span className="text-secondary italic underline decoration-secondary/30 underline-offset-8">Global</span> Footprint.
           </h1>
           <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
-            A visual documentation of our international logistics, quality assurance processes, and cross-border trade operations.
+            A visual documentation of our premium jewellery collections, craftsmanship, and global exhibitions.
           </p>
         </div>
         <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary/5 rounded-full blur-[100px]" />
@@ -151,24 +151,7 @@ export default function GalleryPage() {
         )}
       </section>
 
-      {/* Trust & Stats Bar */}
-      <section className="bg-primary py-16 mt-12 border-y-4 border-secondary/20 relative group">
-        <Ship className="absolute top-1/2 left-10 -translate-y-1/2 w-40 h-40 text-white/5 group-hover:scale-110 transition-transform duration-1000" />
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[
-            { label: "Vessels Managed", value: "340+", icon: Ship },
-            { label: "Cargo Units", value: "12k+", icon: Box },
-            { label: "Trade Routes", value: "85+", icon: Globe },
-            { label: "Carrier Partners", value: "50+", icon: Truck },
-          ].map((stat, i) => (
-            <div key={i} className="flex flex-col items-center text-center p-6 border-r border-white/10 last:border-0 group-hover:scale-105 transition-transform">
-              <stat.icon className="w-6 h-6 text-secondary mb-4" />
-              <p className="text-4xl font-black text-white tracking-tighter underline decoration-secondary decoration-4">{stat.value}</p>
-              <p className="text-slate-400 font-black text-[10px] uppercase tracking-widest mt-2">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
     </div>
   );
 }

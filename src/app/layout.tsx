@@ -17,17 +17,17 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Saraago",
-    default: "Saraago | Premium International Business",
+    template: "%s | SARAAGO Exim",
+    default: "SARAAGO Exim | Premium Lab-Grown Diamond Jewellery Export",
   },
-  description: "Your trusted partner for international export and industrial services. High-quality products and professional management.",
-  keywords: ["export", "international business", "industrial services", "global trade"],
-  authors: [{ name: "Saraago" }],
+  description: "SARAAGO Exim is a focused Indian export company helping international buyers source premium lab-grown diamond jewellery with clear specifications, professional coordination and export-ready documentation.",
+  keywords: ["export", "lab-grown diamonds", "jewellery", "India export", "CVD diamonds", "HPHT diamonds", "SARAAGO"],
+  authors: [{ name: "SARAAGO Exim" }],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://saraago.com",
-    siteName: "Saraago",
+    url: "https://www.saraagoexim.com",
+    siteName: "SARAAGO Exim",
   },
 };
 

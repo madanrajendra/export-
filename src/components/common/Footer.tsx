@@ -3,33 +3,34 @@
 import React from "react";
 import Link from "next/link";
 import { 
-  Globe, 
   Mail, 
   Phone, 
   MapPin, 
-  Share2,
-  MessageCircle,
-  Briefcase,
-  Camera,
-  ChevronRight
+  ChevronRight,
+  Globe
 } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    company: [
-      { name: "About Us", href: "/about" },
-      { name: "Our Services", href: "/services" },
-      { name: "Portfolio", href: "/gallery" },
-      { name: "Blog", href: "/blog" },
-      { name: "Contact", href: "/contact" },
+    quickLinks: [
+      { name: "Home", href: "/#home" },
+      { name: "About", href: "/#about" },
+      { name: "Products", href: "/#products" },
+      { name: "Gallery", href: "/gallery" },
+      { name: "Blogs", href: "/blog" },
+      { name: "Quality", href: "/#quality" },
+      { name: "Export Process", href: "/#export-process" },
+      { name: "Contact", href: "/#contact" },
     ],
     products: [
-      { name: "Industrial Goods", href: "/products?cat=industrial" },
-      { name: "Agriculture", href: "/products?cat=agri" },
-      { name: "Chemicals", href: "/products?cat=chemicals" },
-      { name: "Logistics", href: "/services?cat=logistics" },
+      { name: "Rings", href: "/#products" },
+      { name: "Earrings", href: "/#products" },
+      { name: "Pendants", href: "/#products" },
+      { name: "Necklaces", href: "/#products" },
+      { name: "Bracelets", href: "/#products" },
+      { name: "Custom Jewellery", href: "/#products" },
     ],
   };
 
@@ -39,61 +40,50 @@ export default function Footer() {
         {/* Company Info */}
         <div className="flex flex-col gap-6">
           <Link href="/" className="flex items-center group">
-            <img src="/logo.jpeg" alt="Saraago Logo" className="h-10 md:h-12 object-contain bg-white px-3 py-1.5 rounded-xl" />
+            <img src="/logo.jpeg" alt="SARAAGO Exim" className="h-12 md:h-16 object-contain bg-white px-2 py-1 rounded-sm" />
           </Link>
           <p className="text-slate-400 leading-relaxed max-w-xs text-sm">
-            Empowering global businesses through reliable, efficient, and sustainable export solutions. Your trusted partner in international trade.
+            Premium lab-grown diamond jewellery sourcing and export coordination from India.
           </p>
-          <div className="flex items-center gap-3">
-            {[Share2, MessageCircle, Briefcase, Camera].map((Icon, idx) => (
-              <Link 
-                key={idx} 
-                href="#" 
-                className="bg-slate-800 p-2.5 rounded-full hover:bg-secondary transition-all"
-              >
-                <Icon className="w-5 h-5" />
-              </Link>
-            ))}
-          </div>
         </div>
 
         {/* Quick Links */}
         <div>
           <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-            Company
+            Quick Links
             <span className="h-1 w-8 bg-secondary rounded-full" />
           </h3>
           <ul className="flex flex-col gap-3">
-            {footerLinks.company.map((link) => (
+            {footerLinks.quickLinks.map((link) => (
               <li key={link.name}>
-                <Link 
+                <a 
                   href={link.href} 
-                  className="text-slate-400 hover:text-secondary text-sm flex items-center gap-1 group transition-all"
+                  className="text-slate-400 hover:text-white text-sm flex items-center gap-1 group transition-all"
                 >
                   <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   {link.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Services / Products */}
+        {/* Product Categories */}
         <div>
           <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-            Categories
+            Product Categories
             <span className="h-1 w-8 bg-secondary rounded-full" />
           </h3>
           <ul className="flex flex-col gap-3">
             {footerLinks.products.map((link) => (
               <li key={link.name}>
-                <Link 
+                <a 
                   href={link.href} 
-                  className="text-slate-400 hover:text-secondary text-sm flex items-center gap-1 group transition-all"
+                  className="text-slate-400 hover:text-white text-sm flex items-center gap-1 group transition-all"
                 >
                   <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   {link.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -102,7 +92,7 @@ export default function Footer() {
         {/* Contact info */}
         <div>
           <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-            Contact Us
+            Contact
             <span className="h-1 w-8 bg-secondary rounded-full" />
           </h3>
           <div className="flex flex-col gap-5 text-sm">
@@ -111,28 +101,20 @@ export default function Footer() {
                 <MapPin className="w-4 h-4" />
               </div>
               <p className="text-slate-400 leading-tight pt-1">
-                Railway Kua No- 03, Sutharon Ka Vas,<br />
-                Genhu Road, Near Barmer RS Sub Post Office,<br />
-                Barmer, Rajasthan - 344001
+                Rajasthan, India
               </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="bg-slate-800 p-2 rounded-lg text-secondary">
-                <Phone className="w-4 h-4" />
-              </div>
-              <p className="text-slate-400">+91 9610114181</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="bg-slate-800 p-2 rounded-lg text-secondary">
                 <Mail className="w-4 h-4" />
               </div>
-              <p className="text-slate-400">Saraagoexim@gmail.com</p>
+              <p className="text-slate-400">saraagoexim@gmail.com</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="bg-slate-800 p-2 rounded-lg text-secondary flex items-center justify-center">
-                <span className="text-[9px] font-extrabold leading-none tracking-tighter">GST</span>
+              <div className="bg-slate-800 p-2 rounded-lg text-secondary">
+                <Globe className="w-4 h-4" />
               </div>
-              <p className="text-slate-400 font-medium text-xs">GSTIN: 08INLPK3173G1ZN</p>
+              <p className="text-slate-400">www.saraagoexim.com</p>
             </div>
           </div>
         </div>
@@ -140,11 +122,11 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="container mx-auto px-4 border-t border-slate-800 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 font-medium">
-        <p>&copy; {currentYear} Saraago. All rights reserved.</p>
+        <p>&copy; 2026 SARAAGO Exim. All rights reserved.</p>
         <div className="flex gap-6 uppercase tracking-wider">
-          <Link href="/privacy" className="hover:text-secondary">Privacy Policy</Link>
-          <Link href="/terms" className="hover:text-secondary">Terms of Service</Link>
-          <Link href="/sitemap" className="hover:text-secondary">Sitemap</Link>
+          <Link href="/login" className="hover:text-white transition-colors">Admin</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>
       </div>
     </footer>

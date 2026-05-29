@@ -31,7 +31,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState<Message[]>([
     { 
       id: "1", 
-      text: "Welcome to Saraago. I am your specialized trade assistant. How can I facilitate your international enquiry today?", 
+      text: "Welcome to Saraago. I am your premium jewellery assistant. How can I help you find the perfect piece or collection today?", 
       sender: "bot", 
       timestamp: new Date() 
     }
@@ -71,7 +71,7 @@ export default function ChatbotWidget() {
       
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Understood. Our systems are currently analyzing your query based on our recent catalog compliance. In the meantime, you might find our Product Suite or Contact Page helpful for specific pricing.",
+        text: "Understood. Our systems are currently analyzing your query based on our fine jewellery catalog. In the meantime, you might find our Collections or Contact Page helpful for specific designs.",
         sender: "bot",
         timestamp: new Date()
       };
@@ -98,7 +98,7 @@ export default function ChatbotWidget() {
               </div>
               <div>
                 <h3 className="text-white font-black tracking-widest text-xs uppercase">Saraago Assistant</h3>
-                <p className="text-secondary/80 text-[10px] font-black uppercase tracking-tighter">AI Trade Intelligence Active</p>
+                <p className="text-secondary/80 text-[10px] font-black uppercase tracking-tighter">AI Jewellery Consultant Active</p>
               </div>
             </div>
             <button 
@@ -165,7 +165,7 @@ export default function ChatbotWidget() {
 
           {/* Quick Support Chips */}
           <div className="px-6 py-2 flex gap-2 overflow-x-auto scrollbar-hide no-scrollbar">
-            {["Pricing", "Logistics", "Compliance", "New Account"].map((chip) => (
+            {["Rings", "Custom Design", "Certifications", "Wholesale"].map((chip) => (
               <button 
                 key={chip}
                 onClick={() => setInput(chip)}
@@ -185,7 +185,7 @@ export default function ChatbotWidget() {
               <input 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Secure Trade Query..."
+                placeholder="Search Jewellery Queries..."
                 className="w-full bg-slate-50 border-2 border-transparent focus:border-secondary focus:bg-white px-5 py-4 rounded-2xl outline-none transition-all text-sm font-bold text-primary pr-12"
               />
               <button 

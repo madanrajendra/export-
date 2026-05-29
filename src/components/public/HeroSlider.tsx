@@ -112,9 +112,8 @@ export default function HeroSlider() {
       {banners.map((slide, idx) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-          }`}
+          className="absolute inset-0 transition-transform duration-1000 ease-in-out"
+          style={{ transform: `translateX(${(idx - currentIndex) * 100}%)` }}
         >
           {/* Cover Image */}
           <div 

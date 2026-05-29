@@ -2,26 +2,26 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
+  --foreground: #0a192f;
   
-  --primary: #0f172a;
+  --primary: #0a192f; /* Deep Navy */
   --primary-foreground: #ffffff;
   
-  --secondary: #b45309;
+  --secondary: #1d4ed8; /* SARAAGO Blue */
   --secondary-foreground: #ffffff;
   
-  --accent: #334155;
-  --accent-foreground: #f8fafc;
+  --accent: #d4af37; /* Light Gold */
+  --accent-foreground: #ffffff;
   
-  --muted: #64748b;
-  --muted-foreground: #f1f5f9;
+  --muted: #fdfbf7; /* Soft Beige */
+  --muted-foreground: #334155;
   
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #0a192f;
   
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #0f172a;
+  --ring: #0a192f;
   
   --radius: 0.5rem;
 }
@@ -54,6 +54,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
   
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 }
@@ -73,11 +76,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+    @apply font-heading font-bold tracking-tight;
   }
 }
 

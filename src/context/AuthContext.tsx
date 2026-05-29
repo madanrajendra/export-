@@ -7,7 +7,7 @@ import { auth, db } from "@/lib/firebase/config";
 import { UserProfile } from "@/types";
 
 // ─── Admin email(s) ──────────────────────────────────────────────────────────
-const ADMIN_EMAILS = ["madancse.gcem@gmail.com"];
+const ADMIN_EMAILS = ["madancse.gcem@gmail.com", "saraagoexim@gmail.com"];
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface AuthContextType {

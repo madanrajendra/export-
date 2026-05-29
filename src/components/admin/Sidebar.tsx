@@ -31,19 +31,20 @@ const sidebarItems = [
   { label: "Overview", href: "/admin/dashboard", icon: BarChart2 },
   { label: "Banners", href: "/admin/banners", icon: ImageIcon },
   { label: "Products", href: "/admin/products", icon: ShoppingBag },
-  { label: "Services", href: "/admin/services", icon: Briefcase },
   { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare, badge: "New" },
   { label: "Gallery", href: "/admin/gallery", icon: Truck },
   { label: "Blog Posts", href: "/admin/blogs", icon: FileText },
-  { label: "Subscribers", href: "/admin/users", icon: Users },
-  { label: "Site Settings", href: "/admin/settings", icon: Settings },
 ];
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ onMobileClick }: { onMobileClick?: () => void }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
   const handleLogout = () => signOut(auth);
+
+  const handleNavClick = () => {
+    if (onMobileClick) onMobileClick();
+  };
 
   return (
     <aside 
@@ -57,7 +58,7 @@ export default function AdminSidebar() {
         {!collapsed && (
           <Link href="/admin/dashboard" className="flex items-center gap-2 group">
             <Globe className="text-secondary w-6 h-6 animate-spin-slow" />
-            <span className="font-black text-lg tracking-tighter">GE<span className="text-secondary">CMS</span></span>
+            <span className="font-black text-lg tracking-tighter">SARAAGO<span className="text-secondary">EXIM</span></span>
           </Link>
         )}
         <button 
@@ -76,6 +77,7 @@ export default function AdminSidebar() {
             <Link 
               key={item.href}
               href={item.href}
+              onClick={handleNavClick}
               className={cn(
                 "flex items-center gap-3 p-3.5 rounded-2xl font-bold transition-all group relative",
                 isActive 
@@ -105,6 +107,7 @@ export default function AdminSidebar() {
         {!collapsed && (
           <Link 
             href="/admin/products/new"
+            onClick={handleNavClick}
             className="flex items-center justify-center gap-2 bg-white/5 text-slate-300 py-3 rounded-2xl hover:bg-white/10 transition-colors font-bold text-sm mb-4"
           >
             <PlusCircle className="w-4 h-4" />

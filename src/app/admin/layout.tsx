@@ -13,6 +13,7 @@ export default function AdminLayout({
 }) {
   const { user, isAdmin, loading } = useAuth();
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   useEffect(() => {
     if (!loading && (!user || !isAdmin)) {
@@ -57,8 +58,33 @@ export default function AdminLayout({
 
   return (
     <div className="flex bg-slate-50 min-h-screen">
-      <AdminSidebar />
-      <main className="flex-grow min-w-0 p-8 pt-10 overflow-x-hidden overflow-y-auto">
+      {/* Mobile Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-primary/20 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar with dynamic mobile classes */}
+      <div className={`fixed inset-y-0 left-0 z-50 transform lg:transform-none lg:relative transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <AdminSidebar onMobileClick={() => setMobileMenuOpen(false)} />
+      </div>
+
+      <main className="flex-grow min-w-0 p-4 md:p-8 pt-20 md:pt-10 overflow-x-hidden overflow-y-auto w-full">
+        {/* Mobile Header Toggle */}
+        <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-100 flex items-center px-4 z-30 shadow-sm justify-between">
+          <span className="font-black text-lg tracking-tighter text-primary">SARAAGO<span className="text-secondary">EXIM</span></span>
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 bg-slate-50 text-primary rounded-lg border border-slate-200"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
         <div className="mx-auto max-w-7xl">
           {children}
         </div>

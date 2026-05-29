@@ -22,7 +22,7 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "Industrial", "Agriculture", "Chemicals", "Electronics", "Textiles"];
+  const categories = ["All", "Rings", "Earrings", "Pendants", "Bracelets", "Custom Jewellery"];
 
   useEffect(() => {
     const q = query(

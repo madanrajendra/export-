@@ -73,8 +73,8 @@ export default function AdminProductsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black text-primary tracking-tight mb-2 uppercase">Global Inventory</h1>
-          <p className="text-slate-400 font-bold tracking-widest text-xs">PRODUCT CATALOG & STOCK MANAGEMENT</p>
+          <h1 className="text-4xl font-black text-primary tracking-tight mb-2 uppercase">Product Categories</h1>
+          <p className="text-slate-400 font-bold tracking-widest text-xs uppercase">Export-ready jewellery sourcing with clear specifications.</p>
         </div>
         <Link 
           href="/admin/products/new" 
@@ -103,9 +103,11 @@ export default function AdminProductsPage() {
           </div>
           <select className="bg-transparent text-slate-400 font-bold text-xs uppercase tracking-widest px-4 outline-none border-0">
             <option>All Categories</option>
-            <option>Industrial</option>
-            <option>Agriculture</option>
-            <option>Chemicals</option>
+            <option>Rings</option>
+            <option>Earrings</option>
+            <option>Pendants</option>
+            <option>Bracelets</option>
+            <option>Custom Jewellery</option>
           </select>
         </div>
       </div>

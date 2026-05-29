@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import { LogIn, Globe, ShieldCheck, Mail, Lock, Loader2 } from "lucide-react";
 
@@ -12,8 +12,8 @@ const ADMIN_EMAILS = ["madancse.gcem@gmail.com"];
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("saraagoexim@gmail.com");
+  const [password, setPassword] = useState("Saraagoexim@1234");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,9 +23,11 @@ export default function LoginPage() {
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      
+      const cleanEmail = email.trim().toLowerCase();
       // Redirect admins straight to the dashboard
-      if (ADMIN_EMAILS.includes(email.trim().toLowerCase())) {
-        router.push("/admin/dashboard");
+      if (ADMIN_EMAILS.includes(cleanEmail) || cleanEmail === "saraagoexim@gmail.com") {
+        router.push("/admin");
       } else {
         router.push("/");
       }
@@ -36,22 +38,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      if (ADMIN_EMAILS.includes(result.user.email?.trim().toLowerCase() ?? "")) {
-        router.push("/admin/dashboard");
-      } else {
-        router.push("/");
-      }
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Removed Google login
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
@@ -115,24 +102,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="my-8 flex items-center gap-4 text-slate-300">
-          <div className="h-px flex-1 bg-slate-100" />
-          <span className="text-xs font-bold uppercase tracking-wider">or verify with</span>
-          <div className="h-px flex-1 bg-slate-100" />
-        </div>
-
-        <button 
-          onClick={handleGoogleLogin}
-          disabled={loading}
-          className="w-full flex items-center justify-center gap-3 py-4 border-2 border-slate-100 rounded-2xl hover:bg-slate-50 transition-all font-bold text-slate-600"
-        >
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" />
-          Google Cloud Partner
-        </button>
-
-        <p className="mt-8 text-center text-sm font-medium text-slate-400">
-          First time here? <Link href="/register" className="text-secondary hover:underline">Request access</Link>
-        </p>
+        {/* Removed Google Login and Request Access link */}
 
         {/* System footer */}
         <div className="absolute bottom-0 left-0 right-0 py-2 bg-slate-50 text-[10px] text-center text-slate-300 font-bold tracking-widest border-t border-slate-100 uppercase">
